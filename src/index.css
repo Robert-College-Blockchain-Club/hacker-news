@@ -8,7 +8,26 @@ body {
   background-color: hsl(240, 70%, 85%, 20%);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+/* Loading spinner */
+.spinner {
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  top: 60%;
+  left: 45%;
+  transform: translate(-60%, -45%);
+  border: 0.2rem solid #c6c6c6;
+  border-top: 0.2rem solid red;
+  border-radius: 50%;
+  animation: spin 1s infinite;
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* End of loading spinner */
