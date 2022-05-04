@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: hsl(240, 70%, 85%, 20%);
+  background-color: #111827;
 }
 
 /* Loading spinner */
@@ -13,9 +13,9 @@ body {
   width: 4rem;
   height: 4rem;
   position: absolute;
-  top: 60%;
-  left: 45%;
-  transform: translate(-60%, -45%);
+  top: 50%;
+  left: 48%;
+  transform: translate(-50%, -48%);
   border: 0.2rem solid #c6c6c6;
   border-top: 0.2rem solid red;
   border-radius: 50%;
