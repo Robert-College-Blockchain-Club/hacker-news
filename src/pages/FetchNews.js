@@ -33,7 +33,7 @@ export default function FetchNews() {
           <>
             <Title />
             <Category />
-            <ArticleDisplay {...item} />
+            <ArticleDisplay items={item} />
             
           </>
         )}

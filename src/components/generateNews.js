@@ -16,7 +16,6 @@ class GenerateNews {
           created_at: faker.date.past(),
           objectID: i,
           title: faker.lorem.sentence(),
-          url: faker.internet.url(),
           upvotes: 0,
           downvotes: 0,
           demonstratedReputation: Math.floor((Math.random() * 40) + 30),

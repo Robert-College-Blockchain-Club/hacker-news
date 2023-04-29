@@ -9,28 +9,7 @@ import { Link } from 'react-router-dom'
 
 const ArticleDisplay = ({items}) => {
 
-    const { epochKey, created_at, objectID, title, url, upvotes, downvotes, demonstratedReputation } = items
-    
-
-    const handleVote = (id, value) => {
-        const updatedItems = items.map((item) => {
-            if (item.objectID === id) {
-                if (value === "up") {
-                    return { ...item, upvotes: item.upvotes + 1 }
-                }
-                else if (value === "down") {
-                    return { ...item, downvotes: item.downvotes + 1 }
-                } else {
-                    return item
-                }
-            } else {
-                return item
-            }
-
-        })
-        setItems(updatedItems)
-    }
-
+    const { epochKey, created_at, objectID, title, upvotes, downvotes, demonstratedReputation } = items
 
     return (
         <section className="grid grid-cols-1 gap-5 p-5 md:grid-cols-2 container mx-auto lg:max-w-4xl">
@@ -52,7 +31,7 @@ const ArticleDisplay = ({items}) => {
                             <p className="text-gray-600">
                                 By <em>{epochKey}</em>
                             </p>
-                            <Link to="/article" state={{ items: items, selectedItem: item }} className="article-link" >
+                            <Link to="/article" state={{ items: items }} className="article-link" >
                                 Click for Article👆
                             </Link >
                         </article>
@@ -68,11 +47,7 @@ const ArticleDisplay = ({items}) => {
                             <p className="text-gray-400 mt-10 mr-2">
                                 Reputation: {item.demonstratedReputation}
                             </p>
-                            <div className="flex items-center">
-
-                                <button className="upvote" onClick={() => handleVote(item.objectID, "up")}>⬆️</button>
-                                <button className="downvote" onClick={() => handleVote(item.objectID, "down")}>⬇️</button>
-                            </div>
+                            
 
                         </div>
 

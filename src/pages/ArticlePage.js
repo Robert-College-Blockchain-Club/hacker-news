@@ -2,6 +2,7 @@ import React from 'react'
 import { faker } from '@faker-js/faker';
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 // demonstrated reputation
 // epoch key
@@ -16,40 +17,68 @@ import { useLocation } from "react-router-dom";
 
 
 const ArticlePage = () => {
+    const [articleText, setArticleText] = useState('');
+
+    useEffect(() => {
+        console.log("useEffect called")
+        setArticleText(faker.lorem.paragraphs());
+
+    }, [])
     const { state } = useLocation();
     const selectedItem = state.items;
 
-    const [upvotes, setUpvotes] = useState(0);
-    const [downvotes, setDownvotes] = useState(0);
+    console.log(selectedItem)
+
+    const { epochKey, created_at, objectID, title, upvotes, downvotes, demonstratedReputation } = selectedItem
+    //console.log(selectedItem)
+
+    const [item, setItems] = useState([])
+
 
     const [rating1, setRating1] = useState(0);
     const [rating2, setRating2] = useState(0);
     const [rating3, setRating3] = useState(0);
     const [rating4, setRating4] = useState(0);
 
-    const articleText = faker.lorem.paragraphs();
 
 
+    const handleVote = (id, value) => {
+        const updatedItems = selectedItem.map((item) => {
+            if (item.objectID === id) {
+                if (value === "up") {
+                    return { ...item, upvotes: item.upvotes + 1 }
+                }
+                else if (value === "down") {
+                    return { ...item, downvotes: item.downvotes + 1 }
+                } else {
+                    return item
+                }
+            } else {
+                return item
+            }
 
+        })
+        setItems(updatedItems)
+    }
 
 
     return (
-        <div>
+        <div className="bg-gray-100">
             <nav className="flex justify-between items-center bg-gray-900 p-4">
                 <div className="text-white">
-                    User's Demonstrated Reputation: { }
+                    User's Demonstrated Reputation: {demonstratedReputation}
                 </div>
                 <div className="text-white">
-                    Epoch Key of User: {Math.floor(Math.random() * 10000)}
+                    Epoch Key of User: 828398328942
                 </div>
             </nav>
             <article className="p-4">
-                <p className="text-lg">{articleText}</p>
+                <p className="text-xl">{articleText}</p>
                 <div className="flex justify-end">
                     <div className="flex items-center mr-4">
                         <button
                             className="upvote"
-                            onClick={() => setUpvotes(upvotes + 1)}
+                            onClick={() => handleVote(item.objectID, "up")}
                         >
                             Upvote
                         </button>
@@ -58,7 +87,7 @@ const ArticlePage = () => {
                     <div className="flex items-center">
                         <button
                             className="downvote"
-                            onClick={() => setDownvotes(downvotes + 1)}
+                            onClick={() => handleVote(item.objectID, "down")}
                         >
                             Downvote
                         </button>
@@ -68,61 +97,63 @@ const ArticlePage = () => {
             </article>
             <footer className="bg-gray-200 py-4 px-6 fixed bottom-0 left-0 w-full">
                 <h2 className="text-lg font-bold mb-4">Please rate this article:</h2>
-                <div className="flex justify-between items-center">
-                    <label htmlFor="rating1">Rating Question 1:</label>
-                    <input
-                        type="range"
-                        min="0"
-                        max="5"
-                        value={rating1}
-                        onChange={(event) => setRating1(Number(event.target.value))}
-                        id="rating1"
-                        className="w-4/5 ml-4"
-                    />
-                    <span>{rating1}</span>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="flex justify-between items-center">
+                        <label htmlFor="rating1">This article is credible.</label>
+                        <input
+                            type="range"
+                            min="0"
+                            max="5"
+                            value={rating1}
+                            onChange={(event) => setRating1(Number(event.target.value))}
+                            id="rating1"
+                            className="w-3/5"
+                        />
+                        <span>{rating1}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <label htmlFor="rating2">The article provides factual information.</label>
+                        <input
+                            type="range"
+                            min="0"
+                            max="5"
+                            value={rating2}
+                            onChange={(event) => setRating2(Number(event.target.value))}
+                            id="rating2"
+                            className="w-3/5"
+                        />
+                        <span>{rating2}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <label htmlFor="rating3">The article doesn't lean on any side.</label>
+                        <input
+                            type="range"
+                            min="0"
+                            max="5"
+                            value={rating3}
+                            onChange={(event) => setRating3(Number(event.target.value))}
+                            id="rating3"
+                            className="w-3/5"
+                        />
+                        <span>{rating3}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <label htmlFor="rating4">The writer's reputation proves that they're somewhat reputable.</label>
+                        <input
+                            type="range"
+                            min="0"
+                            max="5"
+                            value={rating4}
+                            onChange={(event) => setRating4(Number(event.target.value))}
+                            id="rating4"
+                            className="w-3/5"
+                        />
+                        <span>{rating4}</span>
+                    </div>
                 </div>
-                <div className="flex justify-between items-center">
-                    <label htmlFor="rating2">Rating Question 2:</label>
-                    <input
-                        type="range"
-                        min="0"
-                        max="5"
-                        value={rating2}
-                        onChange={(event) => setRating2(Number(event.target.value))}
-                        id="rating2"
-                        className="w-4/5 ml-4"
-                    />
-                    <span>{rating2}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                    <label htmlFor="rating3">Rating Question 3:</label>
-                    <input
-                        type="range"
-                        min="0"
-                        max="5"
-                        value={rating3}
-                        onChange={(event) => setRating3(Number(event.target.value))}
-                        id="rating3"
-                        className="w-4/5 ml-4"
-                    />
-                    <span>{rating3}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                    <label htmlFor="rating3">Rating Question 4:</label>
-                    <input
-                        type="range"
-                        min="0"
-                        max="5"
-                        value={rating4}
-                        onChange={(event) => setRating4(Number(event.target.value))}
-                        id="rating3"
-                        className="w-4/5 ml-4"
-                    />
-                    <span>{rating4}</span>
-                </div>
-
-            </footer >
+            </footer>
         </div>
+
 
 
     )
