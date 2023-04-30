@@ -79,13 +79,13 @@ const ArticlePage = ({ items }) => {
         <div className="bg-gray-100">
             <nav className="flex justify-between items-center bg-gray-900 p-4">
                 <div className="text-white">
-                    User's Demonstrated Reputation: { }
+                    User's Demonstrated Reputation: {}
                 </div>
                 <div className="text-white">
-                    Epoch Key of User: 828398328942
+                    Epoch Key of User: {}
                 </div>
             </nav>
-            <article className="p-4">
+            <article className="p-4 article">
                 <p className="text-xl">{articleText}</p>
                 <div className="flex justify-end">
                     <div className="flex items-center mr-4">
