@@ -3,6 +3,8 @@ import { faker } from '@faker-js/faker';
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from 'react-router-dom'
+import GenerateNews from "../components/generateNews";
 
 // demonstrated reputation
 // epoch key
@@ -16,23 +18,34 @@ import { useEffect } from "react";
 // return to main page
 
 
-const ArticlePage = () => {
+const ArticlePage = ({ items }) => {
     const [articleText, setArticleText] = useState('');
+    const [isLoading, setIsLoading] = useState(true) // loading state
+    const [item, setItems] = useState([])
+
+
 
     useEffect(() => {
         console.log("useEffect called")
+        setIsLoading(true)
+        const generateNews = new GenerateNews(10)
+        const articles = generateNews.generate()
+        setItems(articles)
+        setIsLoading(false)
         setArticleText(faker.lorem.paragraphs());
 
     }, [])
-    const { state } = useLocation();
-    const selectedItem = state.items;
 
-    console.log(selectedItem)
 
-    const { epochKey, created_at, objectID, title, upvotes, downvotes, demonstratedReputation } = selectedItem
+    //const {state} = useLocation().state.items;
+    //items = state.items;
+    //const selectedItem = state.items;
+
     //console.log(selectedItem)
 
-    const [item, setItems] = useState([])
+    //const { epochKey, created_at, objectID, title, upvotes, downvotes, demonstratedReputation } = items
+    //console.log(selectedItem)
+
 
 
     const [rating1, setRating1] = useState(0);
@@ -43,7 +56,7 @@ const ArticlePage = () => {
 
 
     const handleVote = (id, value) => {
-        const updatedItems = selectedItem.map((item) => {
+        const updatedItems = items.map((item) => {
             if (item.objectID === id) {
                 if (value === "up") {
                     return { ...item, upvotes: item.upvotes + 1 }
@@ -66,7 +79,7 @@ const ArticlePage = () => {
         <div className="bg-gray-100">
             <nav className="flex justify-between items-center bg-gray-900 p-4">
                 <div className="text-white">
-                    User's Demonstrated Reputation: {demonstratedReputation}
+                    User's Demonstrated Reputation: { }
                 </div>
                 <div className="text-white">
                     Epoch Key of User: 828398328942
@@ -82,7 +95,7 @@ const ArticlePage = () => {
                         >
                             Upvote
                         </button>
-                        <span className="ml-2">{upvotes}</span>
+                        <span className="ml-2">{item.upvotes}</span>
                     </div>
                     <div className="flex items-center">
                         <button
@@ -91,7 +104,8 @@ const ArticlePage = () => {
                         >
                             Downvote
                         </button>
-                        <span className="ml-2">{downvotes}</span>
+                        <Link to="/" className="return">Go back</Link>
+                        <span className="ml-2">{item.downvotes}</span>
                     </div>
                 </div>
             </article>

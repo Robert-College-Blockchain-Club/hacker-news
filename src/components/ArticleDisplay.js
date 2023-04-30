@@ -31,7 +31,7 @@ const ArticleDisplay = ({items}) => {
                             <p className="text-gray-600">
                                 By <em>{epochKey}</em>
                             </p>
-                            <Link to="/article" state={{ items: items }} className="article-link" >
+                            <Link to="/article" state={{ items: item }} className="article-link" >
                                 Click for Article👆
                             </Link >
                         </article>
